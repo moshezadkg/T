@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול אתר הודיה צלמת</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f9f3f3;
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #d291bc;
+            margin-bottom: 15px;
+        }
+        h1 {
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f9f3f3;
+            margin-bottom: 30px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            float: right;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #d291bc;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            animation: fadeEffect 1s;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="url"]:focus,
+        .form-group textarea:focus {
+            border-color: #d291bc;
+            outline: none;
+            box-shadow: 0 0 5px rgba(210, 145, 188, 0.3);
+        }
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .image-preview p {
+            color: #999;
+            font-style: italic;
+        }
+        .export-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        button {
+            background-color: #d291bc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #b97ca2;
+        }
+        .export-textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre;
+            direction: ltr;
+        }
+        .instruction-box {
+            background-color: #f5f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-right: 3px solid #d291bc;
+        }
+        .image-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .image-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fafafa;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        .copy-btn {
+            background-color: #6c757d;
+            padding: 8px 15px;
+            margin-right: 10px;
+        }
+        .service-item {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>מערכת ניהול אתר - הודיה צלמת</h1>
+        
+        <div class="instruction-box">
+            <h3>איך להשתמש במערכת ניהול האתר:</h3>
+            <ol>
+                <li>בחרי את הלשונית המתאימה בהתאם לתוכן שברצונך לערוך</li>
+                <li>מלאי את הטפסים והוסיפי קישורים לתמונות שהעלית ל-Google Drive או כל שירות אחסון אחר</li>
+                <li>לחצי על כפתור "יצוא הנתונים" בתחתית הדף</li>
+                <li>העתיקי את הטקסט שמופיע בתיבה ושלחי אותו לאדם שמנהל את האתר עבורך</li>
+                <li>הוא יעדכן את האתר עם המידע החדש שהזנת</li>
+            </ol>
+        </div>
+
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'home')">דף הבית</button>
+            <button class="tablinks" onclick="openTab(event, 'gallery')">גלריה</button>
+            <button class="tablinks" onclick="openTab(event, 'services')">שירותים</button>
+            <button class="tablinks" onclick="openTab(event, 'contact')">צור קשר</button>
+            <button class="tablinks" onclick="openTab(event, 'about')">אודות</button>
+            <button class="tablinks" onclick="openTab(event, 'testimonials')">המלצות</button>
+            <button class="tablinks" onclick="openTab(event, 'social')">רשתות חברתיות</button>
+        </div>
+
+        <!-- דף הבית -->
+        <div id="home" class="tabcontent" style="display: block;">
+            <h2>עריכת דף הבית</h2>
+            
+            <div class="form-group">
+                <label for="home-hero-title">כותרת ראשית</label>
+                <input type="text" id="home-hero-title" placeholder="כותרת ראשית בדף הבית" value="צילומי ילדים מקצועיים">
+            </div>
+            
+            <div class="form-group">
+                <label for="home-hero-subtitle">כותרת משנה</label>
+                <input type="text" id="home-hero-subtitle" placeholder="כותרת משנה" value="הפיכת רגעים קסומים לזכרונות שנשארים לנצח">
+            </div>
+            
+            <div class="form-group">
+                <label for="home-hero-image">תמונת רקע ראשית (קישור לתמונה)</label>
+                <input type="url" id="home-hero-image" placeholder="הכניסי כאן קישור לתמונה מ-Google Drive או שירות אחר">
+                <div class="image-preview" id="home-hero-image-preview">
+                    <p>תצוגה מקדימה של התמונה תופיע כאן</p>
+                </div>
+            </div>
+            
+            <h3>תמונות לשירותים בדף הבית</h3>
+            <div class="image-items">
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-newborn-image">תמונת ניו בורן</label>
+                        <input type="url" id="home-newborn-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-newborn-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-smash-image">תמונת סמאש קייק</label>
+                        <input type="url" id="home-smash-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-smash-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-halaka-image">תמונת חלאקה</label>
+                        <input type="url" id="home-halaka-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-halaka-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-children-image">תמונת ילדים</label>
+                        <input type="url" id="home-children-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-children-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-batmitzva-image">תמונת בת מצווה</label>
+                        <input type="url" id="home-batmitzva-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-batmitzva-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="home-family-image">תמונת משפחה</label>
+                        <input type="url" id="home-family-image" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="home-family-image-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- גלריה -->
+        <div id="gallery" class="tabcontent">
+            <h2>עריכת הגלריה</h2>
+            
+            <div class="instruction-box">
+                <p>בחלק זה תוכלי להוסיף תמונות לגלריה שלך. עבור כל קטגוריה, תוכלי להוסיף 4 תמונות.</p>
+                <p>הכיני מראש את התמונות והעלי אותן ל-Google Drive או כל שירות אחסון אחר, ואז הכניסי את הקישורים לטופס.</p>
+                <p><strong>חשוב:</strong> ודאי שהקישורים שאת מכניסה מאפשרים צפייה ציבורית בתמונות.</p>
+            </div>
+            
+            <h3>קטגוריית ניו בורן</h3>
+            <div class="image-items">
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-newborn-1">תמונת ניו בורן 1</label>
+                        <input type="url" id="gallery-newborn-1" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-newborn-1-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-newborn-2">תמונת ניו בורן 2</label>
+                        <input type="url" id="gallery-newborn-2" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-newborn-2-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-newborn-3">תמונת ניו בורן 3</label>
+                        <input type="url" id="gallery-newborn-3" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-newborn-3-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-newborn-4">תמונת ניו בורן 4</label>
+                        <input type="url" id="gallery-newborn-4" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-newborn-4-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>קטגוריית סמאש קייק</h3>
+            <div class="image-items">
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-smash-1">תמונת סמאש קייק 1</label>
+                        <input type="url" id="gallery-smash-1" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-smash-1-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More smash cake images would be added here -->
+            </div>
+            
+            <!-- Additional categories would be added the same way -->
+            <!-- For brevity, I'm not including all categories in this example -->
+        </div>
+
+        <!-- שירותים -->
+        <div id="services" class="tabcontent">
+            <h2>עריכת דף השירותים</h2>
+            
+            <div class="instruction-box">
+                <p>בחלק זה תוכלי לערוך את המידע על חבילות השירות שאת מציעה.</p>
+                <p>עדכני את המחירים, התיאורים ותמונות הדוגמה.</p>
+            </div>
+            
+            <h3>חבילות השירות</h3>
+            
+            <div class="service-item">
+                <h3>חבילת ניו בורן</h3>
+                <div class="form-group">
+                    <label for="service-newborn-price">מחיר</label>
+                    <input type="text" id="service-newborn-price" value="₪900">
+                </div>
+                <div class="form-group">
+                    <label for="service-newborn-desc">תיאור החבילה</label>
+                    <textarea id="service-newborn-desc">צילומי ניו בורן מקצועיים בסטודיו או בבית הלקוח, עם אביזרים ותפאורה מותאמים אישית</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-newborn-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-newborn-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-newborn-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-newborn-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-newborn-features">צילום באורך של עד 3 שעות
+שימוש במגוון אביזרים ותפאורות
+20 תמונות ערוכות בפורמט דיגיטלי
+אלבום דיגיטלי
+2 הדפסות בגודל 20x30</textarea>
+                </div>
+            </div>
+            
+            <!-- More service packages would be added here -->
+            <!-- For brevity, I'm not including all services in this example -->
+        </div>
+
+        <!-- צור קשר -->
+        <div id="contact" class="tabcontent">
+            <h2>עריכת דף צור קשר</h2>
+            
+            <div class="instruction-box">
+                <p>בחלק זה תוכלי לערוך את פרטי יצירת הקשר שלך באתר.</p>
+            </div>
+            
+            <h3>פרטי התקשרות</h3>
+            <div class="contact-info">
+                <div class="form-group">
+                    <label for="contact-phone">טלפון</label>
+                    <input type="text" id="contact-phone" value="050-1234567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-email">אימייל</label>
+                    <input type="text" id="contact-email" value="hodaya@photography.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-address">כתובת הסטודיו</label>
+                    <input type="text" id="contact-address" value="רחוב הצילום 10, תל אביב">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-hours">שעות פעילות</label>
+                    <textarea id="contact-hours">ראשון - חמישי: 9:00 - 18:00
+שישי: 9:00 - 13:00
+שבת: סגור</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-facebook">פייסבוק</label>
+                    <input type="text" id="contact-facebook" value="הודיה צלמת">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-instagram">אינסטגרם</label>
+                    <input type="text" id="contact-instagram" value="@hodaya_photography">
+                </div>
+            </div>
+        </div>
+
+        <!-- אודות -->
+        <div id="about" class="tabcontent">
+            <h2>עריכת מידע אודות</h2>
+            
+            <div class="form-group">
+                <label for="about-me-image">תמונה אישית שלך (קישור)</label>
+                <input type="url" id="about-me-image" placeholder="קישור לתמונה אישית">
+                <div class="image-preview" id="about-me-image-preview">
+                    <p>תצוגה מקדימה של התמונה</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="about-me-text">טקסט אודות</label>
+                <textarea id="about-me-text" rows="5">היי, שמי הודיה
+
+צלמת ניו בורן, סמאש קייק, חלאקה, ילדים, משפחה ומתמחה בצילומי גיל שנה.
+
+צילום בשבילי זה אהבה. דרך אומנותית להפוך רגעים אהובים, חשובים ומרגשים לזיכרון איכותי שנשאר לתמיד.
+
+אני מזמינה אתכם לבקר בגלריה שלי, ולהתרשם מהעבודות השונות ומהסגנון הייחודי שלי.
+
+כל צילום מתוכנן בקפידה תוך התחשבות ברצונות ובצרכים של הלקוחות, ובהתאמה אישית לכל משפחה.</textarea>
+            </div>
+        </div>
+
+        <!-- המלצות -->
+        <div id="testimonials" class="tabcontent">
+            <h2>עריכת המלצות לקוחות</h2>
+            
+            <div class="instruction-box">
+                <p>בחלק זה תוכלי להוסיף ולערוך המלצות של לקוחות קודמים.</p>
+                <p>כל המלצה יכולה לכלול את הטקסט של ההמלצה, שם הלקוח/ה, ואפילו תמונה (אופציונלי).</p>
+            </div>
+            
+            <h3>המלצה 1</h3>
+            <div class="form-group">
+                <label for="testimonial-1-text">תוכן ההמלצה</label>
+                <textarea id="testimonial-1-text" rows="5">"הודיה היא צלמת מקצועית ומוכשרת מאוד! היא ידעה בדיוק איך להוציא את התמונות בצורה הטובה ביותר, והייתה סבלנית וקשובה לכל הבקשות שלנו. התמונות של ילדינו יצאו מדהימות ואנחנו לא מפסיקים להסתכל עליהן. בהחלט נחזור לצילומים נוספים!"</textarea>
+            </div>
+            <div class="form-group">
+                <label for="testimonial-1-name">שם הלקוח/ה</label>
+                <input type="text" id="testimonial-1-name" value="רונית כהן">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-1-date">תאריך (אופציונלי)</label>
+                <input type="text" id="testimonial-1-date" value="ינואר 2025">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-1-type">סוג הצילום</label>
+                <input type="text" id="testimonial-1-type" value="צילומי משפחה">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-1-image">תמונה (קישור, אופציונלי)</label>
+                <input type="url" id="testimonial-1-image" value="" placeholder="קישור לתמונת הלקוח או לתמונה מהצילום">
+                <div class="image-preview" id="testimonial-1-image-preview">
+                    <p>תצוגה מקדימה של התמונה תופיע כאן</p>
+                </div>
+            </div>
+            
+            <h3>המלצה 2</h3>
+            <div class="form-group">
+                <label for="testimonial-2-text">תוכן ההמלצה</label>
+                <textarea id="testimonial-2-text" rows="5">"הצילומי ניו-בורן שהודיה עשתה לבננו היו פשוט מושלמים! היא הייתה רגישה מאוד לצרכים של תינוק קטן ויצרה אווירה רגועה ונעימה. התמונות שקיבלנו הן אוצר אמיתי שנשמור לתמיד. ממליצים בחום על הודיה כצלמת מקצועית ואנושית."</textarea>
+            </div>
+            <div class="form-group">
+                <label for="testimonial-2-name">שם הלקוח/ה</label>
+                <input type="text" id="testimonial-2-name" value="משפחת לוי">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-2-date">תאריך (אופציונלי)</label>
+                <input type="text" id="testimonial-2-date" value="מרץ 2025">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-2-type">סוג הצילום</label>
+                <input type="text" id="testimonial-2-type" value="צילומי ניו בורן">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-2-image">תמונה (קישור, אופציונלי)</label>
+                <input type="url" id="testimonial-2-image" value="" placeholder="קישור לתמונת הלקוח או לתמונה מהצילום">
+                <div class="image-preview" id="testimonial-2-image-preview">
+                    <p>תצוגה מקדימה של התמונה תופיע כאן</p>
+                </div>
+            </div>
+            
+            <h3>המלצה 3</h3>
+            <div class="form-group">
+                <label for="testimonial-3-text">תוכן ההמלצה</label>
+                <textarea id="testimonial-3-text" rows="5">"חגגנו את בת המצווה של בתנו עם צילומים מיוחדים של הודיה. הרגישות והמקצועיות שלה הפכו את החוויה למהנה במיוחד. התמונות יצאו מרגשות ויפהפיות, הרבה מעבר למה שציפינו. הודיה היא לא רק צלמת מעולה, אלא גם אדם נפלא שיודע לתפוס את הרגעים המיוחדים ביותר."</textarea>
+            </div>
+            <div class="form-group">
+                <label for="testimonial-3-name">שם הלקוח/ה</label>
+                <input type="text" id="testimonial-3-name" value="דנה ויוסי אברהם">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-3-date">תאריך (אופציונלי)</label>
+                <input type="text" id="testimonial-3-date" value="פברואר 2025">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-3-type">סוג הצילום</label>
+                <input type="text" id="testimonial-3-type" value="צילומי בת מצווה">
+            </div>
+            <div class="form-group">
+                <label for="testimonial-3-image">תמונה (קישור, אופציונלי)</label>
+                <input type="url" id="testimonial-3-image" value="" placeholder="קישור לתמונת הלקוח או לתמונה מהצילום">
+                <div class="image-preview" id="testimonial-3-image-preview">
+                    <p>תצוגה מקדימה של התמונה תופיע כאן</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <button onclick="addTestimonial()" style="margin-top: 20px;">+ הוסף המלצה נוספת</button>
+            </div>
+            
+            <div id="new-testimonials-container">
+                <!-- כאן ייווספו המלצות חדשות באופן דינמי -->
+            </div>
+        </div>
+
+        <!-- רשתות חברתיות -->
+        <div id="social" class="tabcontent">
+            <h2>עריכת רשתות חברתיות</h2>
+            
+            <div class="instruction-box">
+                <p>בחלק זה תוכלי לערוך את קישורים לרשתות החברתיות שלך וכפתורי יצירת קשר.</p>
+            </div>
+            
+            <h3>רשתות חברתיות</h3>
+            <div class="form-group">
+                <label for="social-facebook">קישור לפייסבוק</label>
+                <input type="text" id="social-facebook" value="https://www.facebook.com/hodayaphotography">
+            </div>
+            
+            <div class="form-group">
+                <label for="social-instagram">קישור לאינסטגרם</label>
+                <input type="text" id="social-instagram" value="https://www.instagram.com/hodayaphotography">
+            </div>
+            
+            <div class="form-group">
+                <label for="social-tiktok">קישור לטיקטוק (אם יש)</label>
+                <input type="text" id="social-tiktok" value="">
+            </div>
+            
+            <h3>כפתור WhatsApp</h3>
+            <div class="form-group">
+                <label for="whatsapp-number">מספר טלפון לווטסאפ (כולל קידומת 972 ללא +)</label>
+                <input type="text" id="whatsapp-number" value="972501234567" placeholder="972501234567">
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp-text">הודעה מוכנה מראש (אופציונלי)</label>
+                <input type="text" id="whatsapp-text" value="היי הודיה, אשמח לקבל פרטים על צילומי..." placeholder="היי הודיה, אשמח לקבל פרטים על...">
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp-color">צבע כפתור הווטסאפ</label>
+                <input type="color" id="whatsapp-color" value="#25D366">
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp-position">מיקום הכפתור</label>
+                <select id="whatsapp-position">
+                    <option value="bottom-right" selected>פינה ימנית למטה</option>
+                    <option value="bottom-left">פינה שמאלית למטה</option>
+                    <option value="top-right">פינה ימנית למעלה</option>
+                    <option value="top-left">פינה שמאלית למעלה</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp-display">הצג כפתור WhatsApp</label>
+                <select id="whatsapp-display">
+                    <option value="yes" selected>כן</option>
+                    <option value="no">לא</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <button onclick="exportData()">יצוא הנתונים לעדכון האתר</button>
+            <button onclick="copyToClipboard()" class="copy-btn">העתק לזיכרון</button>
+            <textarea id="export-data" class="export-textarea" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        // פונקציות לטיפול בלשוניות
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // פונקציה לתצוגה מקדימה של תמונות
+        document.addEventListener('DOMContentLoaded', function() {
+            var imageInputs = document.querySelectorAll('input[type="url"]');
+            
+            imageInputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    var previewId = this.id + '-preview';
+                    var previewDiv = document.getElementById(previewId);
+                    
+                    if (previewDiv) {
+                        if (this.value) {
+                            previewDiv.innerHTML = '<img src="' + this.value + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                        } else {
+                            previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
+                        }
+                    }
+                });
+            });
+        });
+
+        // פונקציה ליצוא הנתונים
+        function exportData() {
+            var data = {
+                home: {
+                    heroTitle: document.getElementById('home-hero-title').value,
+                    heroSubtitle: document.getElementById('home-hero-subtitle').value,
+                    heroImage: document.getElementById('home-hero-image').value,
+                    newbornImage: document.getElementById('home-newborn-image').value,
+                    smashImage: document.getElementById('home-smash-image').value,
+                    halakaImage: document.getElementById('home-halaka-image').value,
+                    childrenImage: document.getElementById('home-children-image').value,
+                    batmitzvaImage: document.getElementById('home-batmitzva-image').value,
+                    familyImage: document.getElementById('home-family-image').value
+                },
+                about: {
+                    image: document.getElementById('about-me-image').value,
+                    text: document.getElementById('about-me-text').value
+                },
+                contact: {
+                    phone: document.getElementById('contact-phone').value,
+                    email: document.getElementById('contact-email').value,
+                    address: document.getElementById('contact-address').value,
+                    hours: document.getElementById('contact-hours').value,
+                    facebook: document.getElementById('contact-facebook').value,
+                    instagram: document.getElementById('contact-instagram').value
+                },
+                services: {
+                    newborn: {
+                        price: document.getElementById('service-newborn-price').value,
+                        description: document.getElementById('service-newborn-desc').value,
+                        image: document.getElementById('service-newborn-image').value,
+                        features: document.getElementById('service-newborn-features').value
+                    }
+                    // עוד שירותים יתווספו כאן
+                },
+                gallery: {
+                    newborn: [
+                        document.getElementById('gallery-newborn-1').value,
+                        document.getElementById('gallery-newborn-2').value,
+                        document.getElementById('gallery-newborn-3').value,
+                        document.getElementById('gallery-newborn-4').value
+                    ],
+                    smash: [
+                        document.getElementById('gallery-smash-1') ? document.getElementById('gallery-smash-1').value : ''
+                    ]
+                    // עוד קטגוריות גלריה יתווספו כאן
+                },
+                testimonials: [
+                    {
+                        text: document.getElementById('testimonial-1-text').value,
+                        name: document.getElementById('testimonial-1-name').value,
+                        date: document.getElementById('testimonial-1-date').value,
+                        type: document.getElementById('testimonial-1-type').value,
+                        image: document.getElementById('testimonial-1-image').value
+                    },
+                    {
+                        text: document.getElementById('testimonial-2-text').value,
+                        name: document.getElementById('testimonial-2-name').value,
+                        date: document.getElementById('testimonial-2-date').value,
+                        type: document.getElementById('testimonial-2-type').value,
+                        image: document.getElementById('testimonial-2-image').value
+                    },
+                    {
+                        text: document.getElementById('testimonial-3-text').value,
+                        name: document.getElementById('testimonial-3-name').value,
+                        date: document.getElementById('testimonial-3-date').value,
+                        type: document.getElementById('testimonial-3-type').value,
+                        image: document.getElementById('testimonial-3-image').value
+                    }
+                    // יש לאסוף גם המלצות שנוספו דינמית
+                ],
+                social: {
+                    facebook: document.getElementById('social-facebook').value,
+                    instagram: document.getElementById('social-instagram').value,
+                    tiktok: document.getElementById('social-tiktok').value
+                },
+                whatsapp: {
+                    number: document.getElementById('whatsapp-number').value,
+                    text: document.getElementById('whatsapp-text').value,
+                    color: document.getElementById('whatsapp-color').value,
+                    position: document.getElementById('whatsapp-position').value,
+                    display: document.getElementById('whatsapp-display').value
+                }
+            };
+            
+            // איסוף המלצות נוספות שנוספו דינמית
+            var additionalTestimonials = document.querySelectorAll('.dynamic-testimonial');
+            additionalTestimonials.forEach(function(testimonial, index) {
+                var testimonialId = index + 4; // מתחילים מ-4 כי כבר יש 3 המלצות קבועות
+                data.testimonials.push({
+                    text: document.getElementById('testimonial-' + testimonialId + '-text').value,
+                    name: document.getElementById('testimonial-' + testimonialId + '-name').value,
+                    date: document.getElementById('testimonial-' + testimonialId + '-date').value,
+                    type: document.getElementById('testimonial-' + testimonialId + '-type').value,
+                    image: document.getElementById('testimonial-' + testimonialId + '-image').value
+                });
+            });
+            
+            var jsonStr = JSON.stringify(data, null, 2);
+            document.getElementById('export-data').value = jsonStr;
+        }
+
+        // פונקציה להוספת המלצה נוספת באופן דינמי
+        var testimonialCounter = 4; // מתחילים מ-4 כי כבר יש 3 המלצות קבועות
+        
+        function addTestimonial() {
+            var container = document.getElementById('new-testimonials-container');
+            var testimonialDiv = document.createElement('div');
+            testimonialDiv.className = 'dynamic-testimonial';
+            testimonialDiv.innerHTML = `
+                <h3>המלצה ` + testimonialCounter + `</h3>
+                <div class="form-group">
+                    <label for="testimonial-` + testimonialCounter + `-text">תוכן ההמלצה</label>
+                    <textarea id="testimonial-` + testimonialCounter + `-text" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="testimonial-` + testimonialCounter + `-name">שם הלקוח/ה</label>
+                    <input type="text" id="testimonial-` + testimonialCounter + `-name" value="">
+                </div>
+                <div class="form-group">
+                    <label for="testimonial-` + testimonialCounter + `-date">תאריך (אופציונלי)</label>
+                    <input type="text" id="testimonial-` + testimonialCounter + `-date" value="">
+                </div>
+                <div class="form-group">
+                    <label for="testimonial-` + testimonialCounter + `-type">סוג הצילום</label>
+                    <input type="text" id="testimonial-` + testimonialCounter + `-type" value="">
+                </div>
+                <div class="form-group">
+                    <label for="testimonial-` + testimonialCounter + `-image">תמונה (קישור, אופציונלי)</label>
+                    <input type="url" id="testimonial-` + testimonialCounter + `-image" value="" placeholder="קישור לתמונת הלקוח או לתמונה מהצילום">
+                    <div class="image-preview" id="testimonial-` + testimonialCounter + `-image-preview">
+                        <p>תצוגה מקדימה של התמונה תופיע כאן</p>
+                    </div>
+                </div>
+                <button onclick="removeTestimonial(this)" style="background-color: #dc3545; margin-top: 10px;">הסר המלצה זו</button>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px dashed #ccc;">
+            `;
+            container.appendChild(testimonialDiv);
+            
+            // הוספת מאזין לקישור התמונה החדש
+            var imageInput = document.getElementById('testimonial-' + testimonialCounter + '-image');
+            if (imageInput) {
+                imageInput.addEventListener('input', function() {
+                    var previewId = this.id + '-preview';
+                    var previewDiv = document.getElementById(previewId);
+                    
+                    if (previewDiv) {
+                        if (this.value) {
+                            previewDiv.innerHTML = '<img src="' + this.value + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                        } else {
+                            previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
+                        }
+                    }
+                });
+            }
+            
+            testimonialCounter++;
+        }
+        
+        // פונקציה להסרת המלצה שנוספה דינמית
+        function removeTestimonial(button) {
+            var testimonialDiv = button.parentNode;
+            testimonialDiv.parentNode.removeChild(testimonialDiv);
+        }
+    </script>
+</body>
+</html>
