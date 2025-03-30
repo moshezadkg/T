@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שירותי צילום - הודיה צלמת</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f9f3f3;
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d291bc;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #d291bc;
+        }
+        .services-header {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .services-header h1 {
+            color: #d291bc;
+            margin-bottom: 15px;
+        }
+        .packages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 0;
+            justify-content: center;
+        }
+        .package-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 380px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .package-header {
+            background-color: #d291bc;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .package-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .package-header .price {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .package-content {
+            padding: 25px;
+        }
+        .package-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+        }
+        .features {
+            margin: 20px 0;
+        }
+        .feature-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        .check-icon {
+            color: #d291bc;
+            font-weight: bold;
+        }
+        .package-button {
+            display: block;
+            background-color: #d291bc;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .package-button:hover {
+            background-color: #c17ba7;
+        }
+        .service-section {
+            margin: 80px 0;
+        }
+        .service-section h2 {
+            color: #d291bc;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .service-section h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #d291bc;
+        }
+        .service-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+        .service-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .service-image {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+        }
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .reverse {
+            flex-direction: row-reverse;
+        }
+        .faq-section {
+            margin: 80px 0;
+        }
+        .faq-item {
+            margin-bottom: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .faq-question {
+            padding: 20px;
+            background-color: #f9f3f3;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .faq-question:hover {
+            background-color: #f1e6e6;
+        }
+        .faq-answer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .cta-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 50px;
+            background-color: #d291bc;
+            border-radius: 15px;
+            color: #fff;
+        }
+        .cta-section h2 {
+            margin-bottom: 20px;
+        }
+        .cta-section p {
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #fff;
+            color: #d291bc;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #f9f3f3;
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .package-card {
+                min-width: 100%;
+            }
+            .service-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">הודיה | צלמת</div>
+                <div class="nav-links">
+                    <a href="index.html">דף הבית</a>
+                    <a href="services.html">שירותים</a>
+                    <a href="index.html#about">קצת עליי</a>
+                    <a href="gallery.html">גלריה</a>
+                    <a href="contact.html">צור קשר</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="services-header">
+            <h1>חבילות צילום</h1>
+            <p>בחרו את החבילה המתאימה לכם ותנו לי להנציח את הרגעים המיוחדים שלכם</p>
+        </div>
+
+        <div class="packages">
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת ניו בורן</h2>
+                    <div class="price">₪900</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת ניו בורן</div>
+                    <p>צילומי ניו בורן מקצועיים בסטודיו או בבית הלקוח, עם אביזרים ותפאורה מותאמים אישית</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום באורך של עד 3 שעות</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>שימוש במגוון אביזרים ותפאורות</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>20 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>אלבום דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>2 הדפסות בגודל 20x30</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת סמאש קייק</h2>
+                    <div class="price">₪750</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת סמאש קייק</div>
+                    <p>חגיגת יום הולדת ראשון מלאת צבע ושמחה, עם עוגה מיוחדת וצילומים מקצועיים</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום באורך של כשעה וחצי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>עוגת סמאש קייק מותאמת אישית</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילומי משפחה קבוצתיים</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>15 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>הדפסה אחת בגודל 20x30</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת חלאקה</h2>
+                    <div class="price">₪800</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת חלאקה</div>
+                    <p>תיעוד מרגש של טקס החלאקה המסורתי, לפני, במהלך ואחרי האירוע</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום באורך של כשעתיים</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום בכל שלבי הטקס</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילומי משפחה</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>18 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>סרטון קצר מהאירוע</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="packages">
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת ילדים</h2>
+                    <div class="price">₪600</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת ילדים</div>
+                    <p>צילומי ילדים טבעיים וייחודיים בסטודיו או בלוקיישן חיצוני לבחירתכם</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום באורך של כשעה</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>בחירת לוקיישן לפי העדפה</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>15 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>אפשרות לצילומי אחים</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת בת מצווה</h2>
+                    <div class="price">₪1,200</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת בת מצווה</div>
+                    <p>צילומים חגיגיים לקראת בת המצווה וביום האירוע, עם דגש על רגעים מיוחדים</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילומי סטודיו מקדימים</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילומים ביום האירוע (3 שעות)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>30 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>אלבום מודפס בגודל 20x20</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>תמונה ממוסגרת לבחירה</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h2>חבילת משפחה</h2>
+                    <div class="price">₪850</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-image">תמונת משפחה</div>
+                    <p>צילומי משפחה בלוקיישן לבחירתכם, המנציחים את הקשר המיוחד בין בני המשפחה</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילום באורך של כשעתיים</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>בחירת לוקיישן לפי העדפה</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>20 תמונות ערוכות בפורמט דיגיטלי</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>צילומי משפחה קבוצתיים ואישיים</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="check-icon">✓</span>
+                            <span>3 הדפסות בגודל 15x20</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="package-button">להזמנת חבילה</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <h2>למה לבחור בי?</h2>
+            <div class="service-content">
+                <div class="service-text">
+                    <h3>ניסיון וגישה אישית</h3>
+                    <p>עם שנים של ניסיון בצילום ילדים ומשפחות, אני מביאה גישה אישית וחמה לכל צילום. אני מבינה שכל ילד וכל משפחה הם ייחודיים, ולכן אני מקדישה זמן להכיר אתכם ולהתאים את הצילומים לאופי ולצרכים שלכם.</p>
+                    <p>הסבלנות והרגישות הן חלק בלתי נפרד מהעבודה שלי, במיוחד עם תינוקות וילדים קטנים. אני יודעת כיצד ליצור אווירה נינוחה ומהנה, שמאפשרת לכולם להרגיש בנוח מול המצלמה.</p>
+                </div>
+                <div class="service-image">תמונה של הצלמת בעבודה</div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <h2>תהליך העבודה</h2>
+            <div class="service-content reverse">
+                <div class="service-text">
+                    <h3>מפגישת היכרות ועד לתוצאה הסופית</h3>
+                    <ol style="padding-right: 20px;">
+                        <li style="margin-bottom: 10px;"><strong>פגישת היכרות</strong> - נפגש לשיחת היכרות (פנים אל פנים או בשיחת וידאו) כדי להבין את הצרכים והציפיות שלכם</li>
+                        <li style="margin-bottom: 10px;"><strong>תכנון הצילום</strong> - נבחר יחד תאריך, שעה ומיקום אופטימליים, ונדון ברעיונות לתלבושות ואביזרים</li>
+                        <li style="margin-bottom: 10px;"><strong>הצילום עצמו</strong> - אנהל את הצילום באופן מקצועי ונעים, עם דגש על חוויה נעימה ותוצאות מעולות</li>
+                        <li style="margin-bottom: 10px;"><strong>עריכה ובחירה</strong> - אערוך את התמונות הטובות ביותר ואשלח לכם גלריה פרטית לבחירה</li>
+                        <li><strong>מסירת התוצרים</strong> - לאחר הבחירה, תקבלו את התמונות הסופיות בפורמט דיגיטלי והדפסות לפי החבילה שבחרתם</li>
+                    </ol>
+                </div>
+                <div class="service-image">תרשים של תהליך העבודה</div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2 style="text-align: center; color: #d291bc; margin-bottom: 30px;">שאלות נפוצות</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">מתי הזמן האידיאלי לצילומי ניו בורן?</div>
+                <div class="faq-answer">
+                    <p>הזמן האידיאלי לצילומי ניו בורן הוא בין גיל 5-14 ימים. בתקופה זו התינוקות נוטים לישון יותר, מה שמאפשר לערוך את הצילומים בקלות רבה יותר. מומלץ לתאם את הצילום עוד במהלך ההריון, כדי להבטיח זמינות בתאריכים המתאימים.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">איך מתכוננים לצילומי סמאש קייק?</div>
+                <div class="faq-answer">
+                    <p>לקראת צילומי סמאש קייק, כדאי להביא בגדים להחלפה וכן מגבות ומגבונים. אני מספקת את העוגה והתפאורה, אך אם יש לכם רעיונות ספציפיים או צבעים מועדפים, שמחה לשלב אותם. מומלץ שהילד/ה יהיו אחרי שינה ואוכל, כדי שיהיו במצב רוח טוב במהלך הצילומים.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">האם אתם מגיעים גם לבית הלקוח?</div>
+                <div class="faq-answer">
+                    <p>כן, אני מציעה אפשרות של צילומים בבית הלקוח, במיוחד עבור צילומי ניו בורן ומשפחה. יש יתרונות לצילום בסביבה הטבעית והמוכרת של הבית, במיוחד עבור תינוקות וילדים קטנים. עם זאת, אני גם מציעה צילומים בסטודיו או בלוקיישנים חיצוניים לפי העדפתכם.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">כמה זמן לוקח לקבל את התמונות הסופיות?</div>
+                <div class="faq-answer">
+                    <p>זמן העריכה והמסירה של התמונות הסופיות הוא בדרך כלל 10-14 ימי עבודה. ראשית, תקבלו גלריה של תמונות לבחירה, ולאחר שתבחרו את התמונות המועדפות עליכם, אלו יעברו עריכה סופית ויימסרו לכם בפורמט דיגיטלי והדפסות בהתאם לחבילה שבחרתם.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">איך מתכוננים לצילומי משפחה?</div>
+                <div class="faq-answer">
+                    <p>לצילומי משפחה מומלץ לתאם את הלבוש של כל בני המשפחה כך שיהיה הרמוני (לא בהכרח זהה). כדאי להימנע מהדפסים בולטים וכיתובים על בגדים. חשוב שכולם יהיו במצב רוח טוב, לכן כדאי לתכנן את הצילום בשעות שנוחות לילדים, אחרי מנוחה וארוחה. אני תמיד זמינה לייעץ לגבי הכנות אלו לפני הצילום.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>מוכנים להנציח את הרגעים המיוחדים שלכם?</h2>
+            <p>השאירו פרטים ואחזור אליכם בהקדם לתיאום פגישת היכרות ללא התחייבות.</p>
+            <a href="contact.html" class="cta-button">ליצירת קשר עכשיו</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© כל הזכויות שמורות להודיה צלמת | 2025</p>
+            <div class="social-links">
+                <a href="#">פייסבוק</a>
+                <a href="#">אינסטגרם</a>
+                <a href="#">וואטסאפ</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

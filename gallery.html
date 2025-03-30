@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הגלריה - הודיה צלמת</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f9f3f3;
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d291bc;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #d291bc;
+        }
+        .gallery-header {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .gallery-header h1 {
+            color: #d291bc;
+            margin-bottom: 15px;
+        }
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .gallery-nav button {
+            background-color: transparent;
+            border: 2px solid #d291bc;
+            color: #333;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .gallery-nav button:hover,
+        .gallery-nav button.active {
+            background-color: #d291bc;
+            color: #fff;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255,255,255,0.8);
+            padding: 10px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        .category-title {
+            grid-column: 1 / -1;
+            margin-top: 30px;
+            color: #d291bc;
+            border-bottom: 2px solid #d291bc;
+            padding-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">הודיה | צלמת</div>
+                <div class="nav-links">
+                    <a href="index.html">דף הבית</a>
+                    <a href="services.html">שירותים</a>
+                    <a href="index.html#about">קצת עליי</a>
+                    <a href="gallery.html">גלריה</a>
+                    <a href="contact.html">צור קשר</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="gallery-header">
+            <h1>הגלריה שלי</h1>
+            <p>מוזמנים להתרשם מהעבודות השונות ולצפות ברגעים הקסומים שאני מנציחה</p>
+        </div>
+
+        <div class="gallery-nav">
+            <button class="active" onclick="filterGallery('all')">הכל</button>
+            <button onclick="filterGallery('newborn')">ניו בורן</button>
+            <button onclick="filterGallery('smash')">סמאש קייק</button>
+            <button onclick="filterGallery('halaka')">חלאקה</button>
+            <button onclick="filterGallery('children')">ילדים</button>
+            <button onclick="filterGallery('batmitzva')">בת מצווה</button>
+            <button onclick="filterGallery('family')">משפחות</button>
+        </div>
+
+        <div class="gallery-grid">
+            <h2 class="category-title">צילומי ניו בורן</h2>
+            
+            <div class="gallery-item" data-category="newborn">
+                <div>כאן תופיע תמונת ניו בורן 1</div>
+                <div class="gallery-caption">תינוק בן שבועיים</div>
+            </div>
+            <div class="gallery-item" data-category="newborn">
+                <div>כאן תופיע תמונת ניו בורן 2</div>
+                <div class="gallery-caption">תינוקת בת שבוע</div>
+            </div>
+            <div class="gallery-item" data-category="newborn">
+                <div>כאן תופיע תמונת ניו בורן 3</div>
+                <div class="gallery-caption">צילום משפחתי עם תינוק חדש</div>
+            </div>
+            <div class="gallery-item" data-category="newborn">
+                <div>כאן תופיע תמונת ניו בורן 4</div>
+                <div class="gallery-caption">תאומים בני שבועיים</div>
+            </div>
+
+            <h2 class="category-title">צילומי גיל שנה (סמאש קייק)</h2>
+            
+            <div class="gallery-item" data-category="smash">
+                <div>כאן תופיע תמונת סמאש קייק 1</div>
+                <div class="gallery-caption">חגיגת יום הולדת ראשון</div>
+            </div>
+            <div class="gallery-item" data-category="smash">
+                <div>כאן תופיע תמונת סמאש קייק 2</div>
+                <div class="gallery-caption">ילדה בת שנה עם עוגה</div>
+            </div>
+            <div class="gallery-item" data-category="smash">
+                <div>כאן תופיע תמונת סמאש קייק 3</div>
+                <div class="gallery-caption">תאומים חוגגים יום הולדת</div>
+            </div>
+            <div class="gallery-item" data-category="smash">
+                <div>כאן תופיע תמונת סמאש קייק 4</div>
+                <div class="gallery-caption">מסיבת יום הולדת משפחתית</div>
+            </div>
+
+            <h2 class="category-title">צילומי חלאקה</h2>
+            
+            <div class="gallery-item" data-category="halaka">
+                <div>כאן תופיע תמונת חלאקה 1</div>
+                <div class="gallery-caption">טקס חלאקה מסורתי</div>
+            </div>
+            <div class="gallery-item" data-category="halaka">
+                <div>כאן תופיע תמונת חלאקה 2</div>
+                <div class="gallery-caption">ילד בטקס החלאקה</div>
+            </div>
+            <div class="gallery-item" data-category="halaka">
+                <div>כאן תופיע תמונת חלאקה 3</div>
+                <div class="gallery-caption">משפחה בטקס חלאקה</div>
+            </div>
+            <div class="gallery-item" data-category="halaka">
+                <div>כאן תופיע תמונת חלאקה 4</div>
+                <div class="gallery-caption">רגע מרגש בטקס</div>
+            </div>
+
+            <h2 class="category-title">צילומי ילדים</h2>
+            
+            <div class="gallery-item" data-category="children">
+                <div>כאן תופיע תמונת ילדים 1</div>
+                <div class="gallery-caption">ילדים משחקים בפארק</div>
+            </div>
+            <div class="gallery-item" data-category="children">
+                <div>כאן תופיע תמונת ילדים 2</div>
+                <div class="gallery-caption">ילדה בשדה פרחים</div>
+            </div>
+            <div class="gallery-item" data-category="children">
+                <div>כאן תופיע תמונת ילדים 3</div>
+                <div class="gallery-caption">אחים משחקים יחד</div>
+            </div>
+            <div class="gallery-item" data-category="children">
+                <div>כאן תופיע תמונת ילדים 4</div>
+                <div class="gallery-caption">ילד בצילומי חוץ</div>
+            </div>
+
+            <h2 class="category-title">צילומי בת מצווה</h2>
+            
+            <div class="gallery-item" data-category="batmitzva">
+                <div>כאן תופיע תמונת בת מצווה 1</div>
+                <div class="gallery-caption">חגיגת בת מצווה</div>
+            </div>
+            <div class="gallery-item" data-category="batmitzva">
+                <div>כאן תופיע תמונת בת מצווה 2</div>
+                <div class="gallery-caption">בת מצווה בשמלה חגיגית</div>
+            </div>
+            <div class="gallery-item" data-category="batmitzva">
+                <div>כאן תופיע תמונת בת מצווה 3</div>
+                <div class="gallery-caption">צילומי משפחה לבת מצווה</div>
+            </div>
+            <div class="gallery-item" data-category="batmitzva">
+                <div>כאן תופיע תמונת בת מצווה 4</div>
+                <div class="gallery-caption">בת מצווה בטבע</div>
+            </div>
+
+            <h2 class="category-title">צילומי משפחה</h2>
+            
+            <div class="gallery-item" data-category="family">
+                <div>כאן תופיע תמונת משפחה 1</div>
+                <div class="gallery-caption">משפחה בפארק</div>
+            </div>
+            <div class="gallery-item" data-category="family">
+                <div>כאן תופיע תמונת משפחה 2</div>
+                <div class="gallery-caption">הורים וילדים</div>
+            </div>
+            <div class="gallery-item" data-category="family">
+                <div>כאן תופיע תמונת משפחה 3</div>
+                <div class="gallery-caption">משפחה מורחבת</div>
+            </div>
+            <div class="gallery-item" data-category="family">
+                <div>כאן תופיע תמונת משפחה 4</div>
+                <div class="gallery-caption">צילומי משפחה בסטודיו</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© כל הזכויות שמורות להודיה צלמת | 2025</p>
+            <div class="social-links">
+                <a href="#">פייסבוק</a>
+                <a href="#">אינסטגרם</a>
+                <a href="#">וואטסאפ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterGallery(category) {
+            // המקום לקוד סינון הקטגוריות
+            // בשלב זה זה לא יעבוד כי ביקשת רק HTML
+            
+            // מסמן את הכפתור הפעיל
+            const buttons = document.querySelectorAll('.gallery-nav button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.includes(getCategoryName(category))) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        function getCategoryName(category) {
+            switch(category) {
+                case 'newborn': return 'ניו בורן';
+                case 'smash': return 'סמאש קייק';
+                case 'halaka': return 'חלאקה';
+                case 'children': return 'ילדים';
+                case 'batmitzva': return 'בת מצווה';
+                case 'family': return 'משפחות';
+                default: return 'הכל';
+            }
+        }
+    </script>
+</body>
+</html>
