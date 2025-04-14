@@ -284,6 +284,118 @@
             transform: scale(1.1) rotate(5deg);
             box-shadow: 0 6px 14px rgba(37, 211, 102, 0.6);
         }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .form-status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .form-status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .form-status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .loading {
+            position: relative;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            margin-top: -10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* סגנון למסך התודה */
+        .thank-you-container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: none; /* מוסתר בהתחלה */
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .thank-you-container h2 {
+            color: #d291bc;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .thank-you-container p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        .thank-you-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #d291bc;
+            animation: bounce 1.5s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: #d291bc;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #c17ba7;
+        }
     </style>
 </head>
 <body>
@@ -352,52 +464,38 @@
             </div>
 
             <div class="contact-form-container">
-                <form class="contact-form" action="https://formsubmit.co/h0527104792@gmail.com" method="POST">
+                <form class="contact-form" id="contactForm">
                     <h2>השאירו פרטים ואחזור אליכם בהקדם</h2>
-                    
-                    <!-- הגדרות FormSubmit -->
-                    <input type="hidden" name="_subject" value="פנייה חדשה מאתר הודיה צלמת">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="thank-you.html">
-                    <input type="hidden" name="_autoresponse" value="תודה על פנייתך! הודעתך התקבלה ואחזור אליך בהקדם.">
-                    <input type="text" name="_honey" style="display:none">
-                    
-                    <!-- שינוי שמות השדות לעברית במייל שמתקבל -->
-                    <input type="hidden" name="_email_template_name" value="שם מלא">
-                    <input type="hidden" name="_email_template_phone" value="טלפון">
-                    <input type="hidden" name="_email_template_email" value="אימייל">
-                    <input type="hidden" name="_email_template_service" value="סוג הצילום">
-                    <input type="hidden" name="_email_template_date" value="תאריך מבוקש">
-                    <input type="hidden" name="_email_template_time" value="שעה מועדפת">
-                    <input type="hidden" name="_email_template_message" value="הודעה">
-                    <input type="hidden" name="_email_template_hear-about" value="איך שמעת עלינו">
-                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">שם מלא *</label>
-                            <input type="text" id="name" name="name" placeholder="שם מלא" required>
+                            <input type="text" id="name" name="name" required>
+                            <small class="error-message"></small>
                         </div>
                         <div class="form-group">
                             <label for="phone">טלפון *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="טלפון" pattern="[0-9]{9,10}" title="יש להזין מספר טלפון תקין (9-10 ספרות)" required>
+                            <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" required>
+                            <small class="error-message"></small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">אימייל *</label>
-                        <input type="email" id="email" name="email" placeholder="כתובת אימייל" required>
+                        <input type="email" id="email" name="email" required>
+                        <small class="error-message"></small>
                     </div>
                     <div class="form-group">
                         <label for="service">סוג הצילום המבוקש *</label>
                         <select id="service" name="service" required>
                             <option value="">בחר/י סוג צילום</option>
-                            <option value="ניו בורן">ניו בורן</option>
-                            <option value="סמאש קייק">סמאש קייק</option>
-                            <option value="חלאקה">חלאקה</option>
-                            <option value="ילדים">ילדים</option>
-                            <option value="בת מצווה">בת מצווה</option>
-                            <option value="משפחה">משפחה</option>
-                            <option value="אחר">אחר</option>
+                            <option value="newborn">ניו בורן</option>
+                            <option value="smash">סמאש קייק</option>
+                            <option value="halaka">חלאקה</option>
+                            <option value="children">ילדים</option>
+                            <option value="batmitzva">בת מצווה</option>
+                            <option value="family">משפחה</option>
+                            <option value="other">אחר</option>
                         </select>
+                        <small class="error-message"></small>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -411,21 +509,32 @@
                     </div>
                     <div class="form-group">
                         <label for="message">הודעה *</label>
-                        <textarea id="message" name="message" placeholder="מה תרצו לספר לי על הצילום המבוקש?" required></textarea>
+                        <textarea id="message" name="message" required></textarea>
+                        <small class="error-message"></small>
                     </div>
                     <div class="form-group">
                         <label for="hear-about">איך שמעת עלינו?</label>
                         <select id="hear-about" name="hear-about">
                             <option value="">בחר/י</option>
-                            <option value="רשתות חברתיות">רשתות חברתיות</option>
-                            <option value="חבר/ה">חבר/ה</option>
-                            <option value="חיפוש באינטרנט">חיפוש באינטרנט</option>
-                            <option value="אחר">אחר</option>
+                            <option value="social">רשתות חברתיות</option>
+                            <option value="friend">חבר/ה</option>
+                            <option value="search">חיפוש באינטרנט</option>
+                            <option value="other">אחר</option>
                         </select>
                     </div>
-                    
-                    <button type="submit">שליחה</button>
+                    <div id="form-status" class="form-status"></div>
+                    <button type="submit" id="submit-btn">שליחה</button>
                 </form>
+                
+                <!-- מסך "תודה רבה" שיופיע אחרי שליחת הטופס -->
+                <div class="thank-you-container" id="thankYouContainer">
+                    <div class="thank-you-icon">✓</div>
+                    <h2>תודה שפנית אלינו!</h2>
+                    <p>הפנייה שלך התקבלה בהצלחה.</p>
+                    <p>אחזור אליך בהקדם האפשרי.</p>
+                    <p>בינתיים, מוזמן/ת לעיין בגלריה שלנו ולגלות עוד על השירותים שאנחנו מציעים.</p>
+                    <a href="index.html" class="back-button">חזרה לדף הבית</a>
+                </div>
             </div>
         </div>
 
@@ -449,5 +558,160 @@
     <!-- כפתור וואטסאפ קבוע -->
     <a href="https://wa.me/972548598943?text=היי%20הודיה,%20אשמח%20לקבל%20פרטים%20על%20צילומי..." class="whatsapp-button" target="_blank" aria-label="התקשרו אלינו בוואטסאפ">
     </a>
+
+    <!-- הוספת קוד שליחת דואר -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+        (function() {
+            // הגדרת EmailJS
+            emailjs.init("He5CbXn_ZCmivOSUZ"); // המפתח הציבורי מהאתר
+            
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
+            
+            // פונקציה לבדיקת תקינות הטופס
+            function validateForm() {
+                let isValid = true;
+                const name = document.getElementById('name');
+                const phone = document.getElementById('phone');
+                const email = document.getElementById('email');
+                const service = document.getElementById('service');
+                const message = document.getElementById('message');
+                
+                // בדיקת שם
+                if (name.value.trim() === '') {
+                    showError(name, 'נא להזין שם מלא');
+                    isValid = false;
+                } else {
+                    clearError(name);
+                }
+                
+                // בדיקת טלפון
+                if (phone.value.trim() === '') {
+                    showError(phone, 'נא להזין מספר טלפון');
+                    isValid = false;
+                } else if (!phone.validity.valid) {
+                    showError(phone, 'נא להזין מספר טלפון תקין (9-10 ספרות)');
+                    isValid = false;
+                } else {
+                    clearError(phone);
+                }
+                
+                // בדיקת אימייל
+                if (email.value.trim() === '') {
+                    showError(email, 'נא להזין כתובת אימייל');
+                    isValid = false;
+                } else if (!isValidEmail(email.value)) {
+                    showError(email, 'נא להזין כתובת אימייל תקינה');
+                    isValid = false;
+                } else {
+                    clearError(email);
+                }
+                
+                // בדיקת סוג צילום
+                if (service.value === '') {
+                    showError(service, 'נא לבחור סוג צילום');
+                    isValid = false;
+                } else {
+                    clearError(service);
+                }
+                
+                // בדיקת הודעה
+                if (message.value.trim() === '') {
+                    showError(message, 'נא להזין הודעה');
+                    isValid = false;
+                } else {
+                    clearError(message);
+                }
+                
+                return isValid;
+            }
+            
+            // פונקציה להצגת שגיאה
+            function showError(input, message) {
+                const errorElement = input.nextElementSibling;
+                errorElement.textContent = message;
+            }
+            
+            // פונקציה לניקוי שגיאה
+            function clearError(input) {
+                const errorElement = input.nextElementSibling;
+                errorElement.textContent = '';
+            }
+            
+            // פונקציה לבדיקת תקינות אימייל
+            function isValidEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            
+            // טיפול בשליחת הטופס
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // בדיקת תקינות הטופס
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // הוספת אנימציית טעינה
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+                
+                // איסוף נתוני הטופס
+                const templateParams = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    service: document.getElementById('service').options[document.getElementById('service').selectedIndex].text,
+                    date: document.getElementById('date').value || 'לא צוין',
+                    time: document.getElementById('time').value || 'לא צוין',
+                    message: document.getElementById('message').value,
+                    hearAbout: document.getElementById('hear-about').value ? 
+                              document.getElementById('hear-about').options[document.getElementById('hear-about').selectedIndex].text : 'לא צוין'
+                };
+                
+                // שליחת האימייל באמצעות EmailJS
+                emailjs.send(
+                    'service_95a8s7k', // מזהה השירות
+                    'template_wtwjpsh', // מזהה התבנית
+                    templateParams
+                )
+                    .then(function() {
+                        // הצלחה - הצגת מסך "תודה רבה"
+                        const formElement = document.getElementById('contactForm');
+                        const thankYouElement = document.getElementById('thankYouContainer');
+                        
+                        // החלפת הטופס במסך התודה
+                        formElement.style.display = 'none';
+                        thankYouElement.style.display = 'block';
+                        
+                        // גלילה למעלה כדי שהמשתמש יראה את ההודעה
+                        window.scrollTo({
+                            top: thankYouElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // איפוס הטופס בצורה שקטה (בלי להשפיע על התצוגה)
+                        form.reset();
+                        
+                        // הסרת אנימציית טעינה
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                    }, function(error) {
+                        // שגיאה
+                        console.log('שגיאה בשליחת הטופס:', error);
+                        formStatus.textContent = 'אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר או צור קשר בטלפון.';
+                        formStatus.className = 'form-status error';
+                        
+                        // הסרת אנימציית טעינה
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                    });
+            });
+        })();
+    </script>
 </body>
 </html>
