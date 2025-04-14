@@ -355,6 +355,11 @@
                 </div>
             </div>
             
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('newborn')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת ניו בורן נוספת</button>
+            </div>
+            <div id="newborn-extra-images" class="image-items"></div>
+            
             <h3>קטגוריית סמאש קייק</h3>
             <div class="image-items">
                 <div class="image-item">
@@ -397,6 +402,11 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('smash')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת סמאש קייק נוספת</button>
+            </div>
+            <div id="smash-extra-images" class="image-items"></div>
             
             <h3>קטגוריית חלאקה</h3>
             <div class="image-items">
@@ -441,6 +451,11 @@
                 </div>
             </div>
             
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('halaka')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת חלאקה נוספת</button>
+            </div>
+            <div id="halaka-extra-images" class="image-items"></div>
+            
             <h3>קטגוריית ילדים</h3>
             <div class="image-items">
                 <div class="image-item">
@@ -483,6 +498,11 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('children')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת ילדים נוספת</button>
+            </div>
+            <div id="children-extra-images" class="image-items"></div>
             
             <h3>קטגוריית בת מצווה</h3>
             <div class="image-items">
@@ -527,6 +547,11 @@
                 </div>
             </div>
             
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('batmitzva')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת בת מצווה נוספת</button>
+            </div>
+            <div id="batmitzva-extra-images" class="image-items"></div>
+            
             <h3>קטגוריית משפחות</h3>
             <div class="image-items">
                 <div class="image-item">
@@ -570,8 +595,10 @@
                 </div>
             </div>
             
-            <!-- Additional categories would be added the same way -->
-            <!-- For brevity, I'm not including all categories in this example -->
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('family')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת משפחה נוספת</button>
+            </div>
+            <div id="family-extra-images" class="image-items"></div>
         </div>
 
         <!-- שירותים -->
@@ -926,6 +953,9 @@
             // טעינת הנתונים בעת טעינת הדף
             loadAllData();
             
+            // טעינת תמונות נוספות שהוספו בעבר
+            loadExtraGalleryImages();
+            
             // הוספת מאזיני אירועים לכל שדות הקלט לשמירה אוטומטית
             var allInputs = document.querySelectorAll('input[type="text"], input[type="url"], textarea, input[type="color"], select');
             
@@ -1053,43 +1083,12 @@
                     // עוד שירותים יתווספו כאן
                 },
                 gallery: {
-                    newborn: [
-                        document.getElementById('gallery-newborn-1').value,
-                        document.getElementById('gallery-newborn-2').value,
-                        document.getElementById('gallery-newborn-3').value,
-                        document.getElementById('gallery-newborn-4').value
-                    ],
-                    smash: [
-                        document.getElementById('gallery-smash-1') ? document.getElementById('gallery-smash-1').value : '',
-                        document.getElementById('gallery-smash-2') ? document.getElementById('gallery-smash-2').value : '',
-                        document.getElementById('gallery-smash-3') ? document.getElementById('gallery-smash-3').value : '',
-                        document.getElementById('gallery-smash-4') ? document.getElementById('gallery-smash-4').value : ''
-                    ],
-                    halaka: [
-                        document.getElementById('gallery-halaka-1') ? document.getElementById('gallery-halaka-1').value : '',
-                        document.getElementById('gallery-halaka-2') ? document.getElementById('gallery-halaka-2').value : '',
-                        document.getElementById('gallery-halaka-3') ? document.getElementById('gallery-halaka-3').value : '',
-                        document.getElementById('gallery-halaka-4') ? document.getElementById('gallery-halaka-4').value : ''
-                    ],
-                    children: [
-                        document.getElementById('gallery-children-1') ? document.getElementById('gallery-children-1').value : '',
-                        document.getElementById('gallery-children-2') ? document.getElementById('gallery-children-2').value : '',
-                        document.getElementById('gallery-children-3') ? document.getElementById('gallery-children-3').value : '',
-                        document.getElementById('gallery-children-4') ? document.getElementById('gallery-children-4').value : ''
-                    ],
-                    batmitzva: [
-                        document.getElementById('gallery-batmitzva-1') ? document.getElementById('gallery-batmitzva-1').value : '',
-                        document.getElementById('gallery-batmitzva-2') ? document.getElementById('gallery-batmitzva-2').value : '',
-                        document.getElementById('gallery-batmitzva-3') ? document.getElementById('gallery-batmitzva-3').value : '',
-                        document.getElementById('gallery-batmitzva-4') ? document.getElementById('gallery-batmitzva-4').value : ''
-                    ],
-                    family: [
-                        document.getElementById('gallery-family-1') ? document.getElementById('gallery-family-1').value : '',
-                        document.getElementById('gallery-family-2') ? document.getElementById('gallery-family-2').value : '',
-                        document.getElementById('gallery-family-3') ? document.getElementById('gallery-family-3').value : '',
-                        document.getElementById('gallery-family-4') ? document.getElementById('gallery-family-4').value : ''
-                    ]
-                    // עוד קטגוריות גלריה יתווספו כאן
+                    newborn: collectCategoryImages('newborn'),
+                    smash: collectCategoryImages('smash'),
+                    halaka: collectCategoryImages('halaka'),
+                    children: collectCategoryImages('children'),
+                    batmitzva: collectCategoryImages('batmitzva'),
+                    family: collectCategoryImages('family')
                 },
                 testimonials: [
                     {
@@ -1209,6 +1208,186 @@
         function removeTestimonial(button) {
             var testimonialDiv = button.parentNode;
             testimonialDiv.parentNode.removeChild(testimonialDiv);
+        }
+
+        // פונקציה להוספת תמונות נוספות לקטגוריות הגלריה
+        var galleryCategoryCounters = {
+            'newborn': 5,
+            'smash': 5,
+            'halaka': 5,
+            'children': 5,
+            'batmitzva': 5,
+            'family': 5
+        };
+
+        function addGalleryImage(category) {
+            var counter = galleryCategoryCounters[category];
+            var containerId = category + '-extra-images';
+            var container = document.getElementById(containerId);
+            
+            var imageItem = document.createElement('div');
+            imageItem.className = 'image-item';
+            imageItem.innerHTML = `
+                <div class="form-group">
+                    <label for="gallery-${category}-${counter}">תמונת ${getCategoryDisplayName(category)} ${counter}</label>
+                    <input type="url" id="gallery-${category}-${counter}" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="gallery-${category}-${counter}-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                    <button type="button" onclick="removeGalleryImage(this, '${category}')" style="background-color: #dc3545; margin-top: 10px;">הסר תמונה זו</button>
+                </div>
+            `;
+            container.appendChild(imageItem);
+            
+            // הוספת מאזין לשדה הקישור החדש
+            var input = document.getElementById(`gallery-${category}-${counter}`);
+            if (input) {
+                input.addEventListener('input', function() {
+                    var previewId = this.id + '-preview';
+                    var previewDiv = document.getElementById(previewId);
+                    
+                    if (previewDiv) {
+                        if (this.value) {
+                            var imgSrc = convertGoogleDriveLink(this.value);
+                            previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                        } else {
+                            previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
+                        }
+                    }
+                });
+                
+                // שמירה מיידית ב-localStorage
+                input.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.value);
+                });
+            }
+            
+            galleryCategoryCounters[category]++;
+            
+            // שמירת המונה ב-localStorage
+            localStorage.setItem(`counter-${category}`, galleryCategoryCounters[category]);
+        }
+        
+        // פונקציה להסרת תמונה שנוספה דינמית
+        function removeGalleryImage(button, category) {
+            var imageItem = button.closest('.image-item');
+            var inputId = imageItem.querySelector('input[type="url"]').id;
+            
+            // מחיקת הנתונים מה-localStorage
+            localStorage.removeItem(inputId);
+            
+            // הסרת האלמנט מה-DOM
+            imageItem.parentNode.removeChild(imageItem);
+        }
+        
+        // פונקציה המחזירה את השם המוצג של הקטגוריה
+        function getCategoryDisplayName(category) {
+            switch(category) {
+                case 'newborn': return 'ניו בורן';
+                case 'smash': return 'סמאש קייק';
+                case 'halaka': return 'חלאקה';
+                case 'children': return 'ילדים';
+                case 'batmitzva': return 'בת מצווה';
+                case 'family': return 'משפחה';
+                default: return category;
+            }
+        }
+        
+        // פונקציה לטעינת תמונות נוספות שהוספו בעבר
+        function loadExtraGalleryImages() {
+            var categories = ['newborn', 'smash', 'halaka', 'children', 'batmitzva', 'family'];
+            
+            categories.forEach(function(category) {
+                // טעינת המונה מה-localStorage
+                var storedCounter = localStorage.getItem(`counter-${category}`);
+                if (storedCounter) {
+                    galleryCategoryCounters[category] = parseInt(storedCounter);
+                }
+                
+                // טעינת הקבצים הנוספים
+                for (var i = 5; i < galleryCategoryCounters[category]; i++) {
+                    var imageId = `gallery-${category}-${i}`;
+                    var imageValue = localStorage.getItem(imageId);
+                    
+                    if (imageValue) {
+                        // יש לנו ערך שמור לתמונה זו, אז נוסיף את השדה
+                        var containerId = category + '-extra-images';
+                        var container = document.getElementById(containerId);
+                        
+                        var imageItem = document.createElement('div');
+                        imageItem.className = 'image-item';
+                        imageItem.innerHTML = `
+                            <div class="form-group">
+                                <label for="${imageId}">תמונת ${getCategoryDisplayName(category)} ${i}</label>
+                                <input type="url" id="${imageId}" placeholder="קישור לתמונה" value="${imageValue}">
+                                <div class="image-preview" id="${imageId}-preview">
+                                    <p>תצוגה מקדימה של התמונה</p>
+                                </div>
+                                <button type="button" onclick="removeGalleryImage(this, '${category}')" style="background-color: #dc3545; margin-top: 10px;">הסר תמונה זו</button>
+                            </div>
+                        `;
+                        container.appendChild(imageItem);
+                        
+                        // הוספת מאזין לשדה שנטען
+                        var input = document.getElementById(imageId);
+                        if (input) {
+                            (function(input) {
+                                input.addEventListener('input', function() {
+                                    var previewId = this.id + '-preview';
+                                    var previewDiv = document.getElementById(previewId);
+                                    
+                                    if (previewDiv) {
+                                        if (this.value) {
+                                            var imgSrc = convertGoogleDriveLink(this.value);
+                                            previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                                        } else {
+                                            previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
+                                        }
+                                    }
+                                });
+                                
+                                // שמירה מיידית ב-localStorage
+                                input.addEventListener('change', function() {
+                                    localStorage.setItem(this.id, this.value);
+                                });
+                                
+                                // עדכון תצוגה מקדימה בטעינה ראשונית
+                                var previewId = input.id + '-preview';
+                                var previewDiv = document.getElementById(previewId);
+                                if (previewDiv && input.value) {
+                                    var imgSrc = convertGoogleDriveLink(input.value);
+                                    previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                                }
+                            })(input);
+                        }
+                    }
+                }
+            });
+        }
+
+        // פונקציה לאיסוף כל התמונות של קטגוריה מסוימת, כולל תמונות נוספות
+        function collectCategoryImages(category) {
+            var images = [];
+            
+            // איסוף 4 התמונות הבסיסיות
+            for (var i = 1; i <= 4; i++) {
+                var imageId = 'gallery-' + category + '-' + i;
+                var imageInput = document.getElementById(imageId);
+                if (imageInput) {
+                    images.push(imageInput.value || '');
+                }
+            }
+            
+            // איסוף תמונות נוספות
+            for (var i = 5; i < galleryCategoryCounters[category]; i++) {
+                var imageId = 'gallery-' + category + '-' + i;
+                var imageInput = document.getElementById(imageId);
+                if (imageInput) {
+                    images.push(imageInput.value || '');
+                }
+            }
+            
+            return images;
         }
     </script>
 </body>
