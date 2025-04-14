@@ -556,6 +556,54 @@
             <div class="image-items">
                 <div class="image-item">
                     <div class="form-group">
+                        <label for="gallery-family-1">תמונת משפחות 1</label>
+                        <input type="url" id="gallery-family-1" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-family-1-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-family-2">תמונת משפחות 2</label>
+                        <input type="url" id="gallery-family-2" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-family-2-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-family-3">תמונת משפחות 3</label>
+                        <input type="url" id="gallery-family-3" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-family-3-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-item">
+                    <div class="form-group">
+                        <label for="gallery-family-4">תמונת משפחות 4</label>
+                        <input type="url" id="gallery-family-4" placeholder="קישור לתמונה">
+                        <div class="image-preview" id="gallery-family-4-preview">
+                            <p>תצוגה מקדימה של התמונה</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <button type="button" onclick="addGalleryImage('family')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת משפחות נוספת</button>
+            </div>
+            <div id="family-extra-images" class="image-items"></div>
+            
+            <h3>קטגוריית משפחות</h3>
+            <div class="image-items">
+                <div class="image-item">
+                    <div class="form-group">
                         <label for="gallery-family-1">תמונת משפחה 1</label>
                         <input type="url" id="gallery-family-1" placeholder="קישור לתמונה">
                         <div class="image-preview" id="gallery-family-1-preview">
@@ -636,6 +684,143 @@
 20 תמונות ערוכות בפורמט דיגיטלי
 אלבום דיגיטלי
 2 הדפסות בגודל 20x30</textarea>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <h3>חבילת סמאש קייק</h3>
+                <div class="form-group">
+                    <label for="service-smash-price">מחיר</label>
+                    <input type="text" id="service-smash-price" value="₪750">
+                </div>
+                <div class="form-group">
+                    <label for="service-smash-desc">תיאור החבילה</label>
+                    <textarea id="service-smash-desc">צילומי גיל שנה וסמאש קייק חגיגיים לציון יום ההולדת הראשון, עם תפאורה מיוחדת ועוגה מותאמת אישית</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-smash-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-smash-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-smash-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-smash-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-smash-features">צילום באורך של עד שעתיים
+עוגת סמאש קייק (בתוספת תשלום)
+תפאורה צבעונית לבחירה
+15 תמונות ערוכות בפורמט דיגיטלי
+אלבום דיגיטלי
+הדפסה אחת בגודל 20x30</textarea>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <h3>חבילת חלאקה</h3>
+                <div class="form-group">
+                    <label for="service-halaka-price">מחיר</label>
+                    <input type="text" id="service-halaka-price" value="₪800">
+                </div>
+                <div class="form-group">
+                    <label for="service-halaka-desc">תיאור החבילה</label>
+                    <textarea id="service-halaka-desc">צילום טקס החלאקה המסורתי והמרגש, תיעוד הרגעים המיוחדים והחשובים עם המשפחה והאורחים</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-halaka-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-halaka-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-halaka-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-halaka-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-halaka-features">צילום הטקס המלא (עד 3 שעות)
+תמונות משפחתיות לפני ואחרי הטקס
+25 תמונות ערוכות בפורמט דיגיטלי
+אלבום דיגיטלי
+2 הדפסות בגודל לבחירה</textarea>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <h3>חבילת צילומי ילדים</h3>
+                <div class="form-group">
+                    <label for="service-children-price">מחיר</label>
+                    <input type="text" id="service-children-price" value="₪600">
+                </div>
+                <div class="form-group">
+                    <label for="service-children-desc">תיאור החבילה</label>
+                    <textarea id="service-children-desc">צילומי ילדים מקצועיים בסטודיו או בלוקיישן חיצוני, המאפשרים לתפוס את הרגעים הקסומים והחיוכים המתוקים</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-children-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-children-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-children-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-children-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-children-features">צילום באורך של עד שעה וחצי
+אפשרות לכמה חילופי בגדים
+15 תמונות ערוכות בפורמט דיגיטלי
+אפשרות לצילומי אחים (בתוספת תשלום)
+הדפסה אחת בגודל לבחירה</textarea>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <h3>חבילת בת מצווה</h3>
+                <div class="form-group">
+                    <label for="service-batmitzva-price">מחיר</label>
+                    <input type="text" id="service-batmitzva-price" value="₪950">
+                </div>
+                <div class="form-group">
+                    <label for="service-batmitzva-desc">תיאור החבילה</label>
+                    <textarea id="service-batmitzva-desc">צילומי בת מצווה חגיגיים לציון אירוע מיוחד זה, בסטודיו או בלוקיישן חיצוני לבחירתכם, כולל צילומים משפחתיים</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-batmitzva-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-batmitzva-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-batmitzva-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-batmitzva-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-batmitzva-features">צילומים מקדימים לאירוע (שעתיים)
+מספר לוקיישנים לבחירה
+30 תמונות ערוכות בפורמט דיגיטלי
+אלבום דיגיטלי מעוצב
+3 הדפסות בגדלים לבחירה
+ברכה מעוצבת עם תמונה</textarea>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <h3>חבילת צילומי משפחה</h3>
+                <div class="form-group">
+                    <label for="service-family-price">מחיר</label>
+                    <input type="text" id="service-family-price" value="₪850">
+                </div>
+                <div class="form-group">
+                    <label for="service-family-desc">תיאור החבילה</label>
+                    <textarea id="service-family-desc">צילומי משפחה מקצועיים המנציחים את הקשר והאהבה המשפחתית, בסטודיו או בלוקיישן חיצוני לבחירתכם</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-family-image">תמונה לחבילה (קישור)</label>
+                    <input type="url" id="service-family-image" placeholder="קישור לתמונה">
+                    <div class="image-preview" id="service-family-image-preview">
+                        <p>תצוגה מקדימה של התמונה</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-family-features">פירוט השירותים (כל שורה היא פריט)</label>
+                    <textarea id="service-family-features">צילום באורך של עד שעתיים
+תמונות של המשפחה יחד ותמונות בהרכבים שונים
+25 תמונות ערוכות בפורמט דיגיטלי
+אלבום דיגיטלי משפחתי
+2 הדפסות בגודל לבחירה</textarea>
                 </div>
             </div>
             
@@ -1079,8 +1264,37 @@
                         description: document.getElementById('service-newborn-desc').value,
                         image: document.getElementById('service-newborn-image').value,
                         features: document.getElementById('service-newborn-features').value
+                    },
+                    smash: {
+                        price: document.getElementById('service-smash-price').value,
+                        description: document.getElementById('service-smash-desc').value,
+                        image: document.getElementById('service-smash-image').value,
+                        features: document.getElementById('service-smash-features').value
+                    },
+                    halaka: {
+                        price: document.getElementById('service-halaka-price').value,
+                        description: document.getElementById('service-halaka-desc').value,
+                        image: document.getElementById('service-halaka-image').value,
+                        features: document.getElementById('service-halaka-features').value
+                    },
+                    children: {
+                        price: document.getElementById('service-children-price').value,
+                        description: document.getElementById('service-children-desc').value,
+                        image: document.getElementById('service-children-image').value,
+                        features: document.getElementById('service-children-features').value
+                    },
+                    batmitzva: {
+                        price: document.getElementById('service-batmitzva-price').value,
+                        description: document.getElementById('service-batmitzva-desc').value,
+                        image: document.getElementById('service-batmitzva-image').value,
+                        features: document.getElementById('service-batmitzva-features').value
+                    },
+                    family: {
+                        price: document.getElementById('service-family-price').value,
+                        description: document.getElementById('service-family-desc').value,
+                        image: document.getElementById('service-family-image').value,
+                        features: document.getElementById('service-family-features').value
                     }
-                    // עוד שירותים יתווספו כאן
                 },
                 gallery: {
                     newborn: collectCategoryImages('newborn'),
