@@ -659,7 +659,122 @@
             }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
+            
+            // שמירת הלשונית הנוכחית ב-localStorage
+            localStorage.setItem('activeTab', tabName);
         }
+
+        // פונקציה לשמירת כל הנתונים ב-localStorage
+        function saveAllData() {
+            // שמירת כל שדות הטקסט והקישורים
+            var allInputs = document.querySelectorAll('input[type="text"], input[type="url"], textarea, input[type="color"], select');
+            
+            allInputs.forEach(function(input) {
+                if (input.id) {
+                    localStorage.setItem(input.id, input.value);
+                }
+            });
+            
+            console.log('כל הנתונים נשמרו בהצלחה');
+        }
+        
+        // פונקציה לטעינת כל הנתונים מ-localStorage
+        function loadAllData() {
+            // טעינת כל שדות הטקסט והקישורים
+            var allInputs = document.querySelectorAll('input[type="text"], input[type="url"], textarea, input[type="color"], select');
+            
+            allInputs.forEach(function(input) {
+                if (input.id && localStorage.getItem(input.id)) {
+                    input.value = localStorage.getItem(input.id);
+                    
+                    // במקרה של שדות תמונה, נעדכן גם את התצוגה המקדימה
+                    if (input.type === 'url') {
+                        var previewId = input.id + '-preview';
+                        var previewDiv = document.getElementById(previewId);
+                        
+                        if (previewDiv && input.value) {
+                            var imgSrc = convertGoogleDriveLink(input.value);
+                            previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                        }
+                    }
+                }
+            });
+            
+            // טעינת הלשונית האחרונה שהייתה פעילה
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                document.getElementById(activeTab).style.display = "block";
+                
+                // עדכון כפתור הלשונית
+                var tablinks = document.getElementsByClassName("tablinks");
+                for (var i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    if (tablinks[i].getAttribute('onclick').includes(activeTab)) {
+                        tablinks[i].className += " active";
+                    }
+                }
+            } else {
+                // ברירת מחדל - להציג את דף הבית
+                document.getElementById('home').style.display = "block";
+            }
+            
+            console.log('הנתונים נטענו בהצלחה');
+        }
+        
+        // התקנת מאזיני אירועים לשמירת נתונים אוטומטית
+        document.addEventListener('DOMContentLoaded', function() {
+            // טעינת הנתונים בעת טעינת הדף
+            loadAllData();
+            
+            // הוספת מאזיני אירועים לכל שדות הקלט לשמירה אוטומטית
+            var allInputs = document.querySelectorAll('input[type="text"], input[type="url"], textarea, input[type="color"], select');
+            
+            allInputs.forEach(function(input) {
+                if (input.id) {
+                    input.addEventListener('change', function() {
+                        if (this.id) {
+                            localStorage.setItem(this.id, this.value);
+                            console.log('נשמר: ' + this.id);
+                        }
+                    });
+                    
+                    // עבור שדות טקסט וטקסטאריה, נרצה לשמור גם בעת הקלדה (עם השהייה)
+                    if (input.type === 'text' || input.tagName.toLowerCase() === 'textarea') {
+                        var timeout = null;
+                        input.addEventListener('input', function() {
+                            if (timeout) {
+                                clearTimeout(timeout);
+                            }
+                            var that = this;
+                            timeout = setTimeout(function() {
+                                if (that.id) {
+                                    localStorage.setItem(that.id, that.value);
+                                    console.log('נשמר בהקלדה: ' + that.id);
+                                }
+                            }, 1000); // שמירה אחרי השהייה של שנייה
+                        });
+                    }
+                }
+            });
+            
+            // הוספת כפתור לניקוי הנתונים השמורים
+            var exportSection = document.querySelector('.export-section');
+            if (exportSection) {
+                var clearButton = document.createElement('button');
+                clearButton.textContent = 'ניקוי הנתונים השמורים';
+                clearButton.className = 'copy-btn';
+                clearButton.style.backgroundColor = '#dc3545';
+                clearButton.style.marginLeft = '10px';
+                clearButton.onclick = function() {
+                    if (confirm('האם את בטוחה שברצונך למחוק את כל הנתונים השמורים?')) {
+                        localStorage.clear();
+                        alert('הנתונים נמחקו בהצלחה. רענני את הדף כדי לאפס את הטופס.');
+                        location.reload();
+                    }
+                };
+                exportSection.appendChild(clearButton);
+            }
+        });
 
         // פונקציה לתצוגה מקדימה של תמונות
         document.addEventListener('DOMContentLoaded', function() {
@@ -672,7 +787,9 @@
                     
                     if (previewDiv) {
                         if (this.value) {
-                            previewDiv.innerHTML = '<img src="' + this.value + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                            // המרת קישור של גוגל דרייב לפורמט שמאפשר תצוגה ישירה
+                            var imgSrc = convertGoogleDriveLink(this.value);
+                            previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
                         } else {
                             previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
                         }
@@ -681,8 +798,27 @@
             });
         });
 
+        // פונקציה להמרת קישורי גוגל דרייב לקישורים ישירים
+        function convertGoogleDriveLink(url) {
+            // בדיקה אם הקישור הוא קישור לגוגל דרייב
+            if (url.includes('drive.google.com/file/d/')) {
+                // חילוץ מזהה הקובץ מהקישור
+                var fileId = url.match(/\/d\/([^\/]+)/);
+                if (fileId && fileId[1]) {
+                    // שיטה חדשה שעוקפת את בעיות העוגיות
+                    // יוצרת קישור דרך שרת פרוקסי
+                    return 'https://lh3.googleusercontent.com/d/' + fileId[1];
+                }
+            }
+            // אם זה לא קישור לגוגל דרייב או שהחילוץ נכשל, החזרת הקישור המקורי
+            return url;
+        }
+
         // פונקציה ליצוא הנתונים
         function exportData() {
+            // שמירת כל הנתונים לפני היצוא
+            saveAllData();
+            
             var data = {
                 home: {
                     heroTitle: document.getElementById('home-hero-title').value,
@@ -829,7 +965,9 @@
                     
                     if (previewDiv) {
                         if (this.value) {
-                            previewDiv.innerHTML = '<img src="' + this.value + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
+                            // המרת קישור של גוגל דרייב לפורמט שמאפשר תצוגה ישירה
+                            var imgSrc = convertGoogleDriveLink(this.value);
+                            previewDiv.innerHTML = '<img src="' + imgSrc + '" onerror="this.onerror=null;this.parentNode.innerHTML=\'<p>שגיאה בטעינת התמונה. ודאי שהקישור תקין ומאפשר צפייה.</p>\';" />';
                         } else {
                             previewDiv.innerHTML = '<p>תצוגה מקדימה של התמונה תופיע כאן</p>';
                         }
