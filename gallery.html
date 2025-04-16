@@ -402,8 +402,44 @@
 
     <script>
         function filterGallery(category) {
-            // המקום לקוד סינון הקטגוריות
-            // בשלב זה זה לא יעבוד כי ביקשת רק HTML
+            // סינון הפריטים לפי קטגוריה
+            const items = document.querySelectorAll('.gallery-item');
+            const categoryTitles = document.querySelectorAll('.category-title');
+            
+            // מסתיר/מציג את פריטי הגלריה בהתאם לקטגוריה
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    if (item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+            
+            // מסתיר/מציג את כותרות הקטגוריות
+            categoryTitles.forEach(title => {
+                if (category === 'all') {
+                    title.style.display = 'block';
+                } else {
+                    // בודק אם יש פריטים מוצגים אחרי הכותרת
+                    let showTitle = false;
+                    let nextElement = title.nextElementSibling;
+                    
+                    while (nextElement && !nextElement.classList.contains('category-title')) {
+                        if (nextElement.classList.contains('gallery-item') && 
+                            nextElement.getAttribute('data-category') === category) {
+                            showTitle = true;
+                            break;
+                        }
+                        nextElement = nextElement.nextElementSibling;
+                    }
+                    
+                    title.style.display = showTitle ? 'block' : 'none';
+                }
+            });
             
             // מסמן את הכפתור הפעיל
             const buttons = document.querySelectorAll('.gallery-nav button');
@@ -413,6 +449,14 @@
                     button.classList.add('active');
                 }
             });
+            
+            // גלילה לקטגוריה במידת הצורך
+            if (category !== 'all') {
+                const firstTitle = document.querySelector(`.category-title[style="display: block"]`);
+                if (firstTitle) {
+                    firstTitle.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         }
 
         function getCategoryName(category) {
@@ -426,6 +470,29 @@
                 default: return 'הכל';
             }
         }
+        
+        // הפעלת הסינון הראשוני כאשר הדף נטען
+        document.addEventListener('DOMContentLoaded', function() {
+            // בדיקה אם יש קטגוריה לסינון שנשמרה מדף אחר
+            const savedFilter = localStorage.getItem('galleryFilter');
+            
+            if (savedFilter) {
+                // מפעיל את הסינון על פי הערך שנשמר
+                filterGallery(savedFilter);
+                // מוחק את הערך כדי שלא יישמר לביקור הבא
+                localStorage.removeItem('galleryFilter');
+            } else {
+                // בדיקה אם יש תג בכתובת (URL fragment)
+                const urlFragment = window.location.hash.substring(1);
+                if (urlFragment && ['newborn', 'smash', 'halaka', 'children', 'batmitzva', 'family'].includes(urlFragment)) {
+                    // מפעיל את הסינון על פי התג בכתובת
+                    filterGallery(urlFragment);
+                } else {
+                    // אחרת מציג את כל הפריטים
+                    filterGallery('all');
+                }
+            }
+        });
     </script>
 </body>
 </html>
