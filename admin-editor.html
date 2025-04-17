@@ -312,6 +312,19 @@
                 <p><strong>חשוב:</strong> ודאי שהקישורים שאת מכניסה מאפשרים צפייה ציבורית בתמונות.</p>
             </div>
             
+            <div class="instruction-box">
+                <h3>הגלריה לפי סדר הגיל</h3>
+                <p>הגלריה באתר מסודרת לפי סדר הגדילה של הילדים:</p>
+                <ol>
+                    <li>ניו בורן</li>
+                    <li>סמאש קייק (גיל שנה)</li>
+                    <li>חלאקה</li>
+                    <li>צילומי ילדים</li>
+                    <li>בת מצווה</li>
+                    <li>משפחות</li>
+                </ol>
+            </div>
+            
             <h3>קטגוריית ניו בורן</h3>
             <div class="image-items">
                 <div class="image-item">
@@ -380,8 +393,8 @@
                             <p>תצוגה מקדימה של התמונה</p>
                         </div>
                     </div>
-                </div>
-                
+            </div>
+            
                 <div class="image-item">
                     <div class="form-group">
                         <label for="gallery-smash-3">תמונת סמאש קייק 3</label>
@@ -597,54 +610,6 @@
             
             <div class="form-group">
                 <button type="button" onclick="addGalleryImage('family')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת משפחות נוספת</button>
-            </div>
-            <div id="family-extra-images" class="image-items"></div>
-            
-            <h3>קטגוריית משפחות</h3>
-            <div class="image-items">
-                <div class="image-item">
-                    <div class="form-group">
-                        <label for="gallery-family-1">תמונת משפחה 1</label>
-                        <input type="url" id="gallery-family-1" placeholder="קישור לתמונה">
-                        <div class="image-preview" id="gallery-family-1-preview">
-                            <p>תצוגה מקדימה של התמונה</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="image-item">
-                    <div class="form-group">
-                        <label for="gallery-family-2">תמונת משפחה 2</label>
-                        <input type="url" id="gallery-family-2" placeholder="קישור לתמונה">
-                        <div class="image-preview" id="gallery-family-2-preview">
-                            <p>תצוגה מקדימה של התמונה</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="image-item">
-                    <div class="form-group">
-                        <label for="gallery-family-3">תמונת משפחה 3</label>
-                        <input type="url" id="gallery-family-3" placeholder="קישור לתמונה">
-                        <div class="image-preview" id="gallery-family-3-preview">
-                            <p>תצוגה מקדימה של התמונה</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="image-item">
-                    <div class="form-group">
-                        <label for="gallery-family-4">תמונת משפחה 4</label>
-                        <input type="url" id="gallery-family-4" placeholder="קישור לתמונה">
-                        <div class="image-preview" id="gallery-family-4-preview">
-                            <p>תצוגה מקדימה של התמונה</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <button type="button" onclick="addGalleryImage('family')" style="background-color: #6c757d; margin-bottom: 20px;">+ הוסף תמונת משפחה נוספת</button>
             </div>
             <div id="family-extra-images" class="image-items"></div>
         </div>
@@ -1221,7 +1186,9 @@
                 var fileId = url.match(/\/d\/([^\/]+)/);
                 if (fileId && fileId[1]) {
                     // שיטה חדשה שעוקפת את בעיות העוגיות
-                    // יוצרת קישור דרך שרת פרוקסי
+                    // הערה: כרום עובר למדיניות חדשה שמגבילה עוגיות צד שלישי,
+                    // לכן אנחנו משתמשים בשירות עקיפה של גוגל עצמה בקישור שלהלן
+                    // וזה יפתור את הבעיה של "Chrome is moving towards a new experience..."
                     return 'https://lh3.googleusercontent.com/d/' + fileId[1];
                 }
             }
